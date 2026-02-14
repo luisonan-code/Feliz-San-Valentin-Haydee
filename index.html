@@ -95,12 +95,11 @@
   <script>
     // 1) Cambia esta lista por tus archivos (mismo folder que index.html)
     const images = [
-  { src: "imagen1.jpg", mode: "fit-contain" },  // no se corta
-  { src: "imagen2.jpg", mode: "fit-cover" },    // llena pantalla
-  { src: "imagen3.jpg", mode: "fit-top" },      // enfoca arriba
-  { src: "imagen4.jpg", mode: "fit-center" }    // centrada
+  { src: "imagen1.jpg", mode: "cover" },
+  { src: "imagen2.jpg", mode: "contain" }, // ← ESTA vamos a ajustar
+  { src: "imagen3.jpg", mode: "cover" },
+  { src: "imagen4.jpg", mode: "cover" }
 ];
-
 
     const viewer = document.getElementById("viewer");
     const dots = document.getElementById("dots");
@@ -155,5 +154,6 @@ img.classList.add(src.mode);
   </script>
 </body>
 </html>
+
 
 
