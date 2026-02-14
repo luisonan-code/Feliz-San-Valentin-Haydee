@@ -41,19 +41,19 @@
     }
 
     /* VISOR REAL (sin recortes ni escalado) */
-    .viewer{
-      margin-top:20px;
-      padding:20px;
-      background:#000;
-      min-height:300px;
-    }
+  .viewer{
+  margin-top:20px;
+  background:#000;
+  display:inline-block;   /* se ajusta al contenido */
+}
 
-    .viewer img{
-      display:none;
-      max-width:100%;   /* evita que rompa pantalla */
-      height:auto;      /* mantiene proporción real */
-      margin:auto;
-    }
+
+   .viewer img{
+  display:none;
+  max-width:100%;
+  height:auto;
+}
+
 
     .viewer img.show{
       display:block;
@@ -159,3 +159,4 @@ mount();
 </script>
 </body>
 </html>
+
