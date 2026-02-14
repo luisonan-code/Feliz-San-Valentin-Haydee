@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Para mi amor</title>
+
+  <style>
+    :root { --bg:#0b0b10; --card:#12121a; --txt:#f5f5f7; --muted:#b9b9c4; }
+
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background: var(--bg);
+      color:var(--txt);
+      display:flex;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .wrap{
+      max-width:900px;
+      width:100%;
+    }
+
+    .card{
+      background: rgba(18,18,26,.9);
+      border-radius:16px;
+      padding:20px;
+      text-align:center;
+    }
+
+    header h1{
+      margin:0;
+      font-size:22px;
+    }
+
+    header p{
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    /* VISOR REAL (sin recortes ni escalado) */
+    .viewer{
+      margin-top:20px;
+      padding:20px;
+      background:#000;
+      min-height:300px;
+    }
+
+    .viewer img{
+      display:none;
+      max-width:100%;   /* evita que rompa pantalla */
+      height:auto;      /* mantiene proporción real */
+      margin:auto;
+    }
+
+    .viewer img.show{
+      display:block;
+    }
+
+    .controls{
+      margin-top:15px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    button{
+      background:#222;
+      color:#fff;
+      border:none;
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    .dots{
+      display:flex;
+      gap:6px;
+    }
+
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#555;
+    }
+
+    .dot.on{
+      background:#ff4d8d;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <h1>Feliz San Valentín, mi amor ❤️</h1>
+        <p>He preparado estas fotos para ti</p>
+      </header>
+
+      <div class="viewer" id="viewer"></div>
+
+      <div class="controls">
+        <button id="prev">⟵ Anterior</button>
+        <div class="dots" id="dots"></div>
+        <button id="next">Siguiente ⟶</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const images = [
+  "imagen1.jpg",
+  "imagen2.jpg",
+  "imagen3.jpg",
+  "imagen4.jpg","imagen5.jpg"
+];
+
+const viewer = document.getElementById("viewer");
+const dots = document.getElementById("dots");
+
+let idx = 0;
+const els = [];
+
+function mount(){
+  images.forEach((src,i)=>{
+    const img = document.createElement("img");
+    img.src = src;
+    viewer.appendChild(img);
+    els.push(img);
+
+    const d = document.createElement("div");
+    d.className = "dot" + (i===0 ? " on" : "");
+    d.addEventListener("click", ()=>show(i));
+    dots.appendChild(d);
+  });
+
+  els[0].classList.add("show");
+}
+
+function show(i){
+  if(i<0) i = images.length-1;
+  if(i>=images.length) i = 0;
+
+  els.forEach(el => el.classList.remove("show"));
+  idx = i;
+  els[idx].classList.add("show");
+
+  [...dots.children].forEach((d,k)=>d.classList.toggle("on", k===idx));
+}
+
+document.getElementById("prev").onclick = ()=>show(idx-1);
+document.getElementById("next").onclick = ()=>show(idx+1);
+
+mount();
+</script>
+</body>
+</html>
