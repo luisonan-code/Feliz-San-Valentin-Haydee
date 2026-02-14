@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Para mi amor</title>
+  <meta name="description" content="Feliz San Valentín ❤️" />
+  <style>
+    :root { --bg:#0b0b10; --card:#12121a; --txt:#f5f5f7; --muted:#b9b9c4; }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background: radial-gradient(1200px 600px at 50% -10%, #2a1030 0%, var(--bg) 55%);
+      color:var(--txt); min-height:100vh; display:flex; align-items:center; justify-content:center;
+      padding:18px;
+    }
+    .wrap{width:min(720px,100%);}
+    .card{
+      background: rgba(18,18,26,.82);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 12px 40px rgba(0,0,0,.45);
+      border-radius: 18px;
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+    header{padding:18px 18px 10px; text-align:center;}
+    h1{margin:0; font-size:22px; letter-spacing:.2px}
+    p{margin:8px 0 0; color:var(--muted); font-size:14px}
+    .viewer{position:relative; aspect-ratio: 9/16; background:#000;}
+
+    img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      opacity:0;
+      transform: scale(1.02);
+      transition: opacity .45s ease, transform .55s ease;
+    }
+
+    img.show{opacity:1; transform: scale(1);}
+
+    /* 🔴 REDUCCIÓN AL 50% SOLO PARA LAS IMÁGENES QUE INDIQUES */
+    .scale50{
+      transform: scale(0.5) !important;
+    }
+    .scale50.show{
+      transform: scale(0.5) !important;
+    }
+
+    .controls{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      padding:14px 14px 16px;
+    }
+    button{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color:var(--txt);
+      padding:10px 14px;
+      border-radius: 12px;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .dots{display:flex; gap:6px; align-items:center; justify-content:center; flex:1;}
+    .dot{width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,.22);}
+    .dot.on{background:rgba(255,120,180,.95)}
+    .hint{font-size:12px; color:var(--muted); text-align:center; padding:0 14px 16px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <h1>Feliz San Valentín, mi amor ❤️</h1>
+        <p>He preparado estas fotos para ti. (Toca “Siguiente” o desliza)</p>
+      </header>
+
+      <div class="viewer" id="viewer"></div>
+
+      <div class="controls">
+        <button id="prev">⟵ Anterior</button>
+        <div class="dots" id="dots"></div>
+        <button id="next">Siguiente ⟶</button>
+      </div>
+
+      <div class="hint">
+        “Abre este link, lo hice para ti ❤️”
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const images = [
+      "imagen1.jpg",
+      "imagen2.jpg",
+      "imagen3.jpg",
+      "imagen4.jpg"
+    ];
+
+    const viewer = document.getElementById("viewer");
+    const dots = document.getElementById("dots");
+    let idx = 0;
+    const els = [];
+
+    function mount(){
+      images.forEach((src,i)=>{
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "Foto " + (i+1);
+
+        /* 👇 AQUÍ CONTROLAMOS EL TAMAÑO */
+        if(i === 1) img.classList.add("scale50"); // imagen2
+        if(i === 2) img.classList.add("scale50"); // imagen3
+        if(i === 3) img.classList.add("scale50"); // imagen4
+
+        viewer.appendChild(img);
+        els.push(img);
+
+        const d = document.createElement("div");
+        d.className = "dot" + (i===0 ? " on" : "");
+        d.addEventListener("click", ()=>show(i));
+        dots.appendChild(d);
+      });
+      els[0]?.classList.add("show");
+    }
+
+    function show(i){
+      if(i<0) i = images.length-1;
+      if(i>=images.length) i = 0;
+      els[idx]?.classList.remove("show");
+      idx = i;
+      els[idx]?.classList.add("show");
+      [...dots.children].forEach((d,k)=>d.classList.toggle("on", k===idx));
+    }
+
+    document.getElementById("prev").addEventListener("click", ()=>show(idx-1));
+    document.getElementById("next").addEventListener("click", ()=>show(idx+1));
+
+    mount();
+  </script>
+</body>
+</html>
