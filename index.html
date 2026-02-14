@@ -27,26 +27,28 @@
     h1{margin:0; font-size:22px; letter-spacing:.2px}
     p{margin:8px 0 0; color:var(--muted); font-size:14px}
     .viewer{
-  position:relative;
-  width:auto;
-  height:auto;
+  position:static;
   background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   padding:20px;
+  text-align:center;
 }
 
-   img{
-  position:relative;
+
+  img{
+  position:static;     /* ← ya no flotan */
+  display:block;
+  margin:0 auto;       /* centra sin escalar */
+
   width:auto;
   height:auto;
-  max-width:none;
+
+  max-width:100%;      /* evita que rompa la pantalla */
   max-height:none;
 
   opacity:0;
   transition: opacity .45s ease;
 }
+
   img.show{
   opacity:1;
 }
@@ -143,4 +145,5 @@
   </script>
 </body>
 </html>
+
 
