@@ -32,8 +32,19 @@
   inset:0;
   width:100%;
   height:100%;
-  transition: opacity .45s ease, transform .55s ease;
 }
+
+/* modo normal */
+.cover{
+  object-fit: cover;
+}
+
+/* modo imagen completa (no gigante) */
+.contain{
+  object-fit: contain;
+  background:#000;
+}
+
 
 /* modos de ajuste */
 .fit-cover { object-fit: cover; }      /* llena (como ahora) */
@@ -154,6 +165,7 @@ img.classList.add(src.mode);
   </script>
 </body>
 </html>
+
 
 
 
